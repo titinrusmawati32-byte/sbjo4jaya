@@ -1,0 +1,8 @@
+{
+  "name": "Remix Remix Remix Remix Website Resmi SDN suMBEREJO 04",
+  "description": "Portal Resmi SD Santa Ursula Jakarta dengan navigasi Beranda, Profil, SDM, Akademik, Galeri, Berita, dan Kontak serta fitur PPDB dan Asisten Virtual.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

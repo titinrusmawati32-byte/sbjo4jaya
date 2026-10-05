@@ -1,0 +1,109 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // --- Helpers ---
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && (
+        ('email' in request.auth.token && request.auth.token.email.lower() == "frezafa20@gmail.com") ||
+        (exists(/databases/$(database)/documents/users/$(request.auth.uid)) && 
+         'role' in get(/databases/$(database)/documents/users/$(request.auth.uid)).data &&
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "admin")
+      );
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // --- Rules ---
+
+    // Users collection with RBAC
+    match /users/{userId} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow create: if isSignedIn() && isOwner(userId) && (
+        incoming().role == "user" || 
+        request.auth.token.email == "frezafa20@gmail.com" ||
+        isAdmin()
+      );
+      allow update: if (isOwner(userId) && !incoming().diff(existing()).affectedKeys().hasAny(['role'])) || isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // CMS Config & Profile Collections (Public read, Admin write)
+    match /settings/{docId} { allow read: if true; allow write: if isAdmin(); }
+    match /homepage/{docId} { allow read: if true; allow write: if isAdmin(); }
+    match /navigation/{docId} { allow read: if true; allow write: if isAdmin(); }
+    match /school_profile/{docId} { allow read: if true; allow write: if isAdmin(); }
+    match /ppdb/{docId} { allow read: if true; allow write: if isAdmin(); }
+    match /academic/{docId} { allow read: if true; allow write: if isAdmin(); }
+    match /downloads/{docId} { allow read: if true; allow write: if isAdmin(); }
+    match /agenda/{docId} { allow read: if true; allow write: if isAdmin(); }
+    match /gallery/{docId} { allow read: if true; allow write: if isAdmin(); }
+    match /albums/{docId} { allow read: if true; allow write: if isAdmin(); }
+    match /teachers/{docId} { allow read: if true; allow write: if isAdmin(); }
+    match /staff/{docId} { allow read: if true; allow write: if isAdmin(); }
+    match /media_library/{docId} { allow read: if true; allow write: if isAdmin(); }
+
+    // Legacy school_database (Public read for backward compatibility, Admin write)
+    match /school_database/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Admin Configs (Private)
+    match /admin_configs/{docId} {
+      allow read, write: if isAdmin();
+    }
+
+    // News (Public read published, Admin all)
+    match /news/{articleId} {
+      allow read: if isAdmin() || resource == null || !('status' in resource.data) || resource.data.status == "published";
+      allow write: if isAdmin();
+    }
+
+    // Achievements (Public read published, Admin all)
+    match /achievements/{id} {
+      allow read: if isAdmin() || resource == null || !('status' in resource.data) || resource.data.status == "published";
+      allow write: if isAdmin();
+    }
+
+    // Announcements (Public read enabled, Admin all)
+    match /announcements/{id} {
+      allow read: if isAdmin() || resource == null || !('enabled' in resource.data) || resource.data.enabled == true;
+      allow write: if isAdmin();
+    }
+
+    // PPDB Registrations (Public can register, Admin manage)
+    match /ppdb_registrations/{regId} {
+      allow create: if true;
+      allow read, update, delete: if isAdmin();
+    }
+    match /ppdbRegistrations/{regId} {
+      allow create: if true;
+      allow read, update, delete: if isAdmin();
+    }
+
+    // Contact Messages (Public can submit, Admin manage)
+    match /contact_messages/{msgId} {
+      allow create: if true;
+      allow read, update, delete: if isAdmin();
+    }
+    match /contactMessages/{msgId} {
+      allow create: if true;
+      allow read, update, delete: if isAdmin();
+    }
+  }
+}

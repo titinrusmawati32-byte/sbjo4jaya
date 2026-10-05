@@ -1,0 +1,252 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    /* Main Redesign Color Tokens: Deep Navy Teal, Dark Teal, Emerald, Gold */
+    --primary-bg: #062B3A;
+    --secondary-bg: #083D49;
+    --card-bg: #073440;
+    --accent-green: #00A887;
+    --accent-emerald: #20D6A0;
+    --accent-gold: #FFBD24;
+    --text-primary: #F5FAFC;
+    --text-secondary: #C0D5DF;
+    --border-color: rgba(32, 214, 160, 0.20);
+
+    /* Legacy CSS Variable Compatibility */
+    --primary-navy: #062B3A;
+    --primary-emerald: #00A887;
+    --secondary-emerald: #20D6A0;
+    --accent-gold: #FFBD24;
+    --bg-main: #062B3A;
+    --bg-primary: #062B3A;
+    --bg-secondary: #083D49;
+    --surface: #073440;
+    --border: rgba(32, 214, 160, 0.20);
+    --navy: #062B3A;
+    --emerald: #00A887;
+    --gold: #FFBD24;
+
+    --header-height: 76px;
+
+    font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  [data-theme="dark"] {
+    --primary-bg: #05222E;
+    --secondary-bg: #073440;
+    --card-bg: #062B3A;
+    --accent-green: #00A887;
+    --accent-emerald: #20D6A0;
+    --accent-gold: #FFBD24;
+    --text-primary: #F5FAFC;
+    --text-secondary: #C0D5DF;
+    --border-color: rgba(32, 214, 160, 0.25);
+  }
+
+  html {
+    font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+    scroll-behavior: smooth;
+    background-color: #062B3A;
+    color: #F5FAFC;
+  }
+
+  body {
+    background-color: #062B3A;
+    color: #F5FAFC;
+    font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    letter-spacing: -0.01em;
+    transition: background-color 300ms ease, color 300ms ease;
+  }
+
+  /* Consistent typography hierarchy */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+    color: #F5FAFC;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+  }
+
+  /* Force Poppins on all text elements and remove serif overrides */
+  .font-serif, .font-sans {
+    font-family: 'Poppins', sans-serif !important;
+  }
+
+  button, input, select, textarea {
+    font-family: 'Poppins', sans-serif;
+  }
+}
+
+/* Primary Button: Emerald #00A887 with Gold #FFBD24 hover */
+.btn-primary {
+  background-color: #00A887;
+  color: #FFFFFF;
+  border-radius: 30px;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 12px 28px;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 14px rgba(0, 168, 135, 0.3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-primary:hover {
+  background-color: #FFBD24;
+  color: #062B3A;
+  box-shadow: 0 6px 20px rgba(255, 189, 36, 0.4);
+  transform: translateY(-1px);
+}
+
+/* Secondary Button: Translucent Dark Teal Glass with Soft Emerald Border */
+.btn-secondary {
+  background-color: rgba(7, 52, 64, 0.65);
+  color: #F5FAFC;
+  border: 1px solid rgba(32, 214, 160, 0.30);
+  border-radius: 30px;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 12px 28px;
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  backdrop-filter: blur(8px);
+}
+
+.btn-secondary:hover {
+  background-color: rgba(32, 214, 160, 0.15);
+  border-color: #20D6A0;
+  color: #FFFFFF;
+  transform: translateY(-1px);
+}
+
+/* Modern Dark Glassmorphism Edu Card Styling */
+.edu-card {
+  border-radius: 20px;
+  background-color: #073440;
+  border: 1px solid rgba(32, 214, 160, 0.20);
+  box-shadow: 0 4px 20px -2px rgba(6, 43, 58, 0.5);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(12px);
+  color: #F5FAFC;
+}
+
+.edu-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px -4px rgba(0, 168, 135, 0.2);
+  border-color: rgba(32, 214, 160, 0.50);
+}
+
+/* Section Heading Standard */
+.section-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(2rem, 3.5vw, 2.5rem);
+  font-weight: 700;
+  color: #F5FAFC;
+  line-height: 1.25;
+}
+
+.section-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  border-radius: 9999px;
+  background-color: rgba(32, 214, 160, 0.15);
+  border: 1px solid rgba(32, 214, 160, 0.30);
+  color: #20D6A0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Custom Gold & Emerald Harmonized Styling */
+.bg-gold-gradient {
+  background: linear-gradient(135deg, #FFBD24 0%, #ffe082 25%, #d4af37 50%, #FFBD24 100%);
+}
+
+.bg-gold-subtle {
+  background: linear-gradient(135deg, rgba(255, 189, 36, 0.15) 0%, rgba(255, 224, 130, 0.2) 100%);
+}
+
+.text-gold-gradient {
+  background: linear-gradient(135deg, #FFBD24 0%, #ffe082 50%, #d4af37 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.border-gold {
+  border-color: #FFBD24;
+}
+
+.border-gold-glow {
+  box-shadow: 0 0 15px rgba(255, 189, 36, 0.3);
+  border-color: rgba(255, 189, 36, 0.6);
+}
+
+/* Custom font utility classes */
+.tracking-tight-titles {
+  letter-spacing: -0.025em;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* --- Admin Panel Dark Mode Overrides --- */
+.dark {
+  /* Automatically override colors on layout base elements for the admin panel */
+  .bg-white {
+    background-color: #0f172a !important; /* slate-900 */
+  }
+  .bg-slate-50 {
+    background-color: #1e293b !important; /* slate-800 */
+  }
+  .border-slate-100, .border-slate-200 {
+    border-color: #334155 !important; /* slate-700 */
+  }
+  .text-slate-900, .text-black, .text-slate-800 {
+    color: #f8fafc !important; /* slate-50 */
+  }
+  .text-slate-500, .text-slate-600 {
+    color: #cbd5e1 !important; /* slate-300 */
+  }
+  
+  /* Tables & inputs */
+  table th {
+    background-color: #1e293b !important;
+    color: #f8fafc !important;
+  }
+  table td {
+    border-color: #334155 !important;
+  }
+  input, select, textarea {
+    background-color: #1e293b !important;
+    color: #ffffff !important;
+    border-color: #334155 !important;
+  }
+  input::placeholder, textarea::placeholder {
+    color: #64748b !important;
+  }
+  
+  /* Modals background overlay */
+  .bg-black\/60 {
+    background-color: rgba(0, 0, 0, 0.8) !important;
+  }
+}

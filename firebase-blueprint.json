@@ -1,0 +1,203 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "User account data with role-based access control.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "user"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "SchoolSettings": {
+      "title": "School Settings",
+      "description": "General settings for the school website.",
+      "type": "object",
+      "properties": {
+        "schoolName": { "type": "string" },
+        "npsn": { "type": "string" },
+        "logo": { "type": "string" },
+        "favicon": { "type": "string" },
+        "primaryColor": { "type": "string" },
+        "accentColor": { "type": "string" },
+        "seoTitle": { "type": "string" },
+        "seoDescription": { "type": "string" },
+        "footerText": { "type": "string" },
+        "socialMedia": { "type": "object" }
+      }
+    },
+    "HomepageConfig": {
+      "title": "Homepage Configuration",
+      "description": "Settings for the landing page sections.",
+      "type": "object",
+      "properties": {
+        "hero": { "type": "object" },
+        "sections": { "type": "array" },
+        "headmasterWelcome": { "type": "object" },
+        "stats": { "type": "array" }
+      }
+    },
+    "NewsArticle": {
+      "title": "News Article",
+      "description": "A news or blog post.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "slug": { "type": "string" },
+        "category": { "type": "string" },
+        "thumbnail": { "type": "string" },
+        "content": { "type": "string" },
+        "author": { "type": "string" },
+        "publishedAt": { "type": "string", "format": "date-time" },
+        "status": { "type": "string", "enum": ["draft", "published"] },
+        "featured": { "type": "boolean" }
+      },
+      "required": ["title", "slug", "content", "status"]
+    },
+    "Teacher": {
+      "title": "Teacher / Staff",
+      "description": "Personnel data.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "photo": { "type": "string" },
+        "position": { "type": "string" },
+        "subject": { "type": "string" },
+        "bio": { "type": "string" },
+        "order": { "type": "number" },
+        "status": { "type": "string" },
+        "type": { "type": "string", "enum": ["guru", "staff"] }
+      },
+      "required": ["name", "position", "type"]
+    },
+    "Achievement": {
+      "title": "Achievement",
+      "description": "Awards and accomplishments.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "image": { "type": "string" },
+        "category": { "type": "string" },
+        "date": { "type": "string" },
+        "level": { "type": "string" },
+        "status": { "type": "string", "enum": ["draft", "published"] }
+      }
+    },
+    "GalleryAlbum": {
+      "title": "Gallery Album",
+      "description": "A collection of photos.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "coverImage": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "photos": { "type": "array" }
+      }
+    },
+    "SchoolEvent": {
+      "title": "Agenda / Event",
+      "description": "Upcoming school events.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "date": { "type": "string" },
+        "time": { "type": "string" },
+        "location": { "type": "string" },
+        "image": { "type": "string" },
+        "status": { "type": "string" }
+      }
+    },
+    "Announcement": {
+      "title": "Announcement",
+      "description": "Floating or popup notifications.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "image": { "type": "string" },
+        "buttonText": { "type": "string" },
+        "buttonLink": { "type": "string" },
+        "enabled": { "type": "boolean" },
+        "startDate": { "type": "string" },
+        "endDate": { "type": "string" }
+      }
+    },
+    "PPDBConfig": {
+      "title": "PPDB Settings",
+      "description": "Configuration for student admission.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "period": { "type": "string" },
+        "description": { "type": "string" },
+        "poster": { "type": "string" },
+        "formLink": { "type": "string" },
+        "status": { "type": "boolean" },
+        "showPopup": { "type": "boolean" }
+      }
+    },
+    "NavigationConfig": {
+      "title": "Navigation Menu",
+      "description": "Main menu items.",
+      "type": "object",
+      "properties": {
+        "items": { "type": "array" }
+      }
+    }
+  },
+  "firestore": {
+    "users/{uid}": {
+      "schema": "User",
+      "description": "User profiles with roles."
+    },
+    "settings/general": {
+      "schema": "SchoolSettings",
+      "description": "General school identity settings."
+    },
+    "homepage/main": {
+      "schema": "HomepageConfig",
+      "description": "Landing page configuration."
+    },
+    "news": {
+      "schema": "NewsArticle",
+      "description": "News articles collection."
+    },
+    "teachers": {
+      "schema": "Teacher",
+      "description": "Teachers and staff collection."
+    },
+    "achievements": {
+      "schema": "Achievement",
+      "description": "School achievements collection."
+    },
+    "albums": {
+      "schema": "GalleryAlbum",
+      "description": "Gallery albums collection."
+    },
+    "agenda": {
+      "schema": "SchoolEvent",
+      "description": "School agenda/events collection."
+    },
+    "announcements": {
+      "schema": "Announcement",
+      "description": "Global announcements collection."
+    },
+    "ppdb/config": {
+      "schema": "PPDBConfig",
+      "description": "PPDB configuration."
+    },
+    "navigation/main": {
+      "schema": "NavigationConfig",
+      "description": "Website navigation menu."
+    }
+  }
+}
