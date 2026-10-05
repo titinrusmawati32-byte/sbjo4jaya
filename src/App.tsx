@@ -40,6 +40,14 @@ function AppContent() {
       {/* Admin Routes */}
       <Route path="/admin/login" element={<LoginView />} />
       <Route 
+        path="/admin" 
+        element={
+          <ProtectedRoute adminOnly>
+            <AdminDashboard />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
         path="/admin/*" 
         element={
           <ProtectedRoute adminOnly>
